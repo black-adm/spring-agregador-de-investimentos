@@ -1,6 +1,7 @@
 package com.blackadm.investment.aggregator.controller;
 
 import com.blackadm.investment.aggregator.dto.CreateClientDto;
+import com.blackadm.investment.aggregator.dto.UpdateClientDto;
 import com.blackadm.investment.aggregator.entity.Client;
 import com.blackadm.investment.aggregator.service.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,14 @@ public class ClientController {
         var clients = clientService.getAllClients();
 
         return ResponseEntity.ok(clients);
+    }
+
+    @PutMapping("/{clientId}")
+    public ResponseEntity<Void> editClient(@PathVariable("clientId") String clientId,
+                                           @RequestBody UpdateClientDto updateClientDto) {
+        clientService.updateClient(clientId, updateClientDto);
+
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{clientId}")

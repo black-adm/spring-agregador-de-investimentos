@@ -40,4 +40,11 @@ public class ClientService {
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
+
+    public void deleteClient(String clientId) {
+        var id = UUID.fromString(clientId);
+        var clientExists = clientRepository.existsById(id);
+
+        if (clientExists) clientRepository.deleteById(id);
+    }
 }

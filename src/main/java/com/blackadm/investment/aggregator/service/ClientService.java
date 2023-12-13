@@ -6,6 +6,8 @@ import com.blackadm.investment.aggregator.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,5 +31,13 @@ public class ClientService {
 
         var data = clientRepository.save(entity);
         return data.getClientId();
+    }
+
+    public Optional<Client> getClientById(String clientId) {
+        return clientRepository.findById(UUID.fromString(clientId));
+    }
+
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
     }
 }

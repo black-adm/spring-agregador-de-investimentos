@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/clients")
@@ -23,5 +24,19 @@ public class ClientController {
         var clientId = clientService.createClient(createClientDto);
 
         return ResponseEntity.created(URI.create("/v1/clients/" + clientId.toString())).build();
+    }
+
+    @GetMapping("/{clientId}")
+    public ResponseEntity<Client> findClientById(@PathVariable("clientId") String clientId) {
+        var client = clientService.getClientById(clientId);
+
+        return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Client>> listClients() {
+        var clients = clientService.getAllClients();
+
+        return ResponseEntity.ok(clients);
     }
 }
